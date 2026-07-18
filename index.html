@@ -231,19 +231,20 @@
 
     /* Fix 2: X gumb unutar overlay-a — fiksiran gore desno */
     .mobile-menu-close {
-      position: absolute;
-      top: 18px;
-      right: clamp(16px, 5vw, 32px);
+      position: static;        /* više nije fiksiran u kut — teče s ostalim sadržajem */
+      align-self: flex-start;  /* poravnat uz lijevu stranu flex-columna */
       width: 44px;
       height: 44px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       background: transparent;
       border: none;
       cursor: pointer;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.5);
       transition: color 0.2s;
+      margin-bottom: 16px;     /* razmak između X i prvog nav linka */
+      padding: 0;
     }
 
     .mobile-menu-close:hover {
@@ -1109,6 +1110,20 @@
     }
 
     @media (max-width: 600px) {
+      /* Fix 1: sakrij "Pogledaj radove" gumb na mobitelu */
+      .hero-cta { display: none; }
+
+      /* Fix 2: hero sekcija — puna visina ekrana, sadržaj ima prostora */
+      .hero {
+        min-height: 100svh;
+        align-items: flex-start; /* sadržaj kreće od vrha, ne centriran */
+      }
+
+      .hero-content {
+        padding-top: 130px; /* dovoljno ispod headera + hamburger ikone */
+        padding-bottom: 48px;
+      }
+
       /* Hamburger gumb — vidljiv na mobitelu */
       .hamburger { display: flex; }
 
