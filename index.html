@@ -119,26 +119,7 @@
       margin-left: 12px; /* precizna korekcija poravnanja s hero tekstom ispod */
     }
 
-    /* ── MOBITEL: header — logo i nav u dva reda, poravnanje lijevo ── */
-    @media (max-width: 600px) {
-      .header-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .logo {
-        margin-left: 0;
-      }
-
-      .nav {
-        gap: 20px;
-      }
-
-      .nav a span {
-        display: inline; /* override donjeg display:none — na mobitelu prikazujemo nazive */
-      }
-    }
+    /* ── MOBITEL: hamburger CSS dolazi niže u @media bloku ── */
 
     .logo span {
       color: var(--lime);
@@ -179,6 +160,166 @@
 
     .nav a:hover::before {
       background: var(--neo-blue);
+    }
+
+    /* ─────────────────────────────────────────────
+       HAMBURGER GUMB (vidljiv samo na mobitelu)
+    ───────────────────────────────────────────── */
+    .hamburger {
+      display: none; /* skriven na desktopu */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 201;
+      flex-shrink: 0;
+    }
+
+    .hamburger-bar {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.25s ease,
+                  width 0.3s ease;
+      transform-origin: center;
+    }
+
+    /* X animacija — kad je meni otvoren */
+    .hamburger.is-open .hamburger-bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.is-open .hamburger-bar:nth-child(2) {
+      opacity: 0;
+      width: 0;
+    }
+    .hamburger.is-open .hamburger-bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ─────────────────────────────────────────────
+       MOBILE OVERLAY MENI
+    ───────────────────────────────────────────── */
+    .mobile-menu {
+      display: none; /* skriven na desktopu */
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 clamp(28px, 8vw, 56px);
+      /* Slide-in iz desna */
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu.is-open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      width: 100%;
+    }
+
+    .mobile-menu-nav li {
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      overflow: hidden;
+    }
+
+    .mobile-menu-nav li:first-child {
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .mobile-menu-nav a {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 7vw, 2.2rem);
+      font-weight: 800;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+      /* Svaka stavka se pojavljuje s blagim kašnjenjem */
+      opacity: 0;
+      transform: translateX(20px);
+      transition: color 0.2s, opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .mobile-menu.is-open .mobile-menu-nav a {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Staggered animacija redova */
+    .mobile-menu.is-open .mobile-menu-nav li:nth-child(1) a { transition-delay: 0.08s; }
+    .mobile-menu.is-open .mobile-menu-nav li:nth-child(2) a { transition-delay: 0.14s; }
+    .mobile-menu.is-open .mobile-menu-nav li:nth-child(3) a { transition-delay: 0.20s; }
+
+    .mobile-menu-nav a::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--neo-blue);
+      flex-shrink: 0;
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .mobile-menu-nav a:hover {
+      color: var(--white);
+    }
+
+    .mobile-menu-nav a:hover::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Socijalni linkovi na dnu overlay menija */
+    .mobile-menu-footer {
+      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease 0.3s, transform 0.35s ease 0.3s;
+    }
+
+    .mobile-menu.is-open .mobile-menu-footer {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu-footer a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu-footer a:hover {
+      color: rgba(255,255,255,0.7);
     }
 
     /* ─────────────────────────────────────────────
@@ -934,21 +1075,34 @@
     }
 
     @media (max-width: 600px) {
-      /* nav gap i span sada riješeni u bloku iznad (.logo fix) */
+      /* Hamburger gumb — vidljiv na mobitelu */
+      .hamburger { display: flex; }
+
+      /* Desktop nav — skriven na mobitelu (zamjenjuje ga overlay) */
+      .header-inner > nav { display: none; }
+
+      /* Header ostaje u redu: logo lijevo, hamburger desno */
+      .header-inner {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      /* Logo bez desktop margin offseta */
+      .logo { margin-left: 0; }
+
+      /* Mobile overlay meni — postaje vidljiv (display:flex) */
+      .mobile-menu { display: flex; }
+
+      /* Fix 3: more-grid — jedan stupac */
+      .more-grid { grid-template-columns: 1fr; }
 
       .footer-inner { gap: 24px; }
       .footer-brand { flex-direction: column; align-items: flex-start; gap: 4px; }
 
-      /* Fix 3: more-grid — jedan stupac na mobilnoj (desktop ima 3, tablet 2) */
-      .more-grid { grid-template-columns: 1fr; }
-
-      .more-card-title { font-size: 0.82rem; }
-      .more-card-cat { font-size: 0.7rem; }
-
-      /* Fix 4a: footer logo align left (margin-left reset) */
+      /* Fix 4a: footer logo align left */
       .footer-brand .logo { margin-left: 0; }
 
-      /* Fix 4b: footer-bottom — naziv u prvi red, copyright tekst u novi red */
+      /* Fix 4b: footer-bottom — copyright u novi red */
       .footer-bottom {
         flex-direction: column;
         align-items: flex-start;
@@ -956,10 +1110,12 @@
       }
 
       .footer-bottom p {
-        /* "Sva prava pridržana" ide u vlastiti red */
         display: block;
         width: 100%;
       }
+
+      .more-card-title { font-size: 0.82rem; }
+      .more-card-cat { font-size: 0.7rem; }
     }
 
     /* ─────────────────────────────────────────────
@@ -992,6 +1148,7 @@
 
       <a href="#" class="logo">Danijel<span>.</span>Kovačević</a>
 
+      <!-- Desktop navigacija -->
       <nav>
         <ul class="nav">
           <li><a href="#o-meni"><span>O meni</span></a></li>
@@ -1000,8 +1157,31 @@
         </ul>
       </nav>
 
+      <!-- Hamburger gumb (vidljiv samo na mobitelu) -->
+      <button class="hamburger" id="hamburgerBtn" aria-label="Otvori izbornik" aria-expanded="false" aria-controls="mobileMenu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
     </div>
   </header>
+
+  <!-- Mobile fullscreen overlay meni -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav>
+      <ul class="mobile-menu-nav">
+        <li><a href="#o-meni" class="mobile-nav-link">O meni</a></li>
+        <li><a href="#radovi" class="mobile-nav-link">Radovi</a></li>
+        <li><a href="#kontakt" class="mobile-nav-link">Kontakt</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-menu-footer">
+      <a href="mailto:kovacevicdanijel@yahoo.com">Email</a>
+      <a href="https://linkedin.com/in/tvoj-profil" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://behance.net/tvoj-profil" target="_blank" rel="noopener">Behance</a>
+    </div>
+  </div>
 
 
   <!-- ══════════════════════════════════════════
@@ -1136,7 +1316,7 @@
             <div class="work-meta">
               <span class="featured-tag">Izdvojeno</span>
               <p class="work-category">Web Design</p>
-              <h3 class="work-title">Yves Rocher mobilna verzija dizajna</h3>
+              <h3 class="work-title">Naziv projekta</h3>
               <p class="work-desc">
                 Kratki opis projekta — što je naručnik tražio, koji je tvoj
                 pristup bio i kakav je rezultat. Dvije do tri rečenice.
@@ -1144,7 +1324,7 @@
             </div>
 
             <div class="work-gallery">
-              <img class="gallery-img" src="assets/images/yves rocher webshop_mobilna.webp" alt="Naziv projekta 02 – kategorija">
+              <img class="gallery-img" src="assets/images/projekt-02.jpg" alt="Naziv projekta 02 – kategorija">
             </div>
 
           </article>
@@ -1808,6 +1988,62 @@
 
     window.addEventListener('load', init);
   })();
+  </script>
+
+  <!-- ══════════════════════════════════════════
+       HAMBURGER MENI — JavaScript
+  ══════════════════════════════════════════ -->
+  <script>
+    (() => {
+      const btn  = document.getElementById('hamburgerBtn');
+      const menu = document.getElementById('mobileMenu');
+      const links = menu.querySelectorAll('.mobile-nav-link');
+
+      function openMenu() {
+        menu.classList.add('is-open');
+        btn.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; /* zaključaj scroll dok je overlay otvoren */
+      }
+
+      function closeMenu() {
+        menu.classList.remove('is-open');
+        btn.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      btn.addEventListener('click', () => {
+        btn.classList.contains('is-open') ? closeMenu() : openMenu();
+      });
+
+      /* Klik na link — zatvori meni i smooth-scrollaj na sekciju */
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const target = document.querySelector(link.getAttribute('href'));
+          closeMenu();
+          if (target) {
+            e.preventDefault();
+            /* Mali timeout da overlay stigne izaći prije scrolla */
+            setTimeout(() => {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 320);
+          }
+        });
+      });
+
+      /* Zatvori meni na Escape */
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
+      });
+
+      /* Automatski zatvori ako se prozor proširi na desktop širinu */
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 600 && menu.classList.contains('is-open')) closeMenu();
+      });
+    })();
   </script>
 
 </body>
