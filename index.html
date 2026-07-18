@@ -119,6 +119,27 @@
       margin-left: 12px; /* precizna korekcija poravnanja s hero tekstom ispod */
     }
 
+    /* ── MOBITEL: header — logo i nav u dva reda, poravnanje lijevo ── */
+    @media (max-width: 600px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .logo {
+        margin-left: 0;
+      }
+
+      .nav {
+        gap: 20px;
+      }
+
+      .nav a span {
+        display: inline; /* override donjeg display:none — na mobitelu prikazujemo nazive */
+      }
+    }
+
     .logo span {
       color: var(--lime);
     }
@@ -913,16 +934,32 @@
     }
 
     @media (max-width: 600px) {
-      .nav { gap: 20px; }
-      .nav a span { display: none; }
+      /* nav gap i span sada riješeni u bloku iznad (.logo fix) */
 
       .footer-inner { gap: 24px; }
       .footer-brand { flex-direction: column; align-items: flex-start; gap: 4px; }
 
-      /* 1 stupac — "Prikaži još" gumb već rješava dužinu scrolla
-         (prvih 6 se vidi odmah), pa ne treba žrtvovati vidljivost radi toga. */
+      /* Fix 3: more-grid — jedan stupac na mobilnoj (desktop ima 3, tablet 2) */
+      .more-grid { grid-template-columns: 1fr; }
+
       .more-card-title { font-size: 0.82rem; }
       .more-card-cat { font-size: 0.7rem; }
+
+      /* Fix 4a: footer logo align left (margin-left reset) */
+      .footer-brand .logo { margin-left: 0; }
+
+      /* Fix 4b: footer-bottom — naziv u prvi red, copyright tekst u novi red */
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .footer-bottom p {
+        /* "Sva prava pridržana" ide u vlastiti red */
+        display: block;
+        width: 100%;
+      }
     }
 
     /* ─────────────────────────────────────────────
@@ -1099,7 +1136,7 @@
             <div class="work-meta">
               <span class="featured-tag">Izdvojeno</span>
               <p class="work-category">Web Design</p>
-              <h3 class="work-title">Naziv projekta</h3>
+              <h3 class="work-title">Yves Rocher mobilna verzija dizajna</h3>
               <p class="work-desc">
                 Kratki opis projekta — što je naručnik tražio, koji je tvoj
                 pristup bio i kakav je rezultat. Dvije do tri rečenice.
@@ -1107,7 +1144,7 @@
             </div>
 
             <div class="work-gallery">
-              <img class="gallery-img" src="assets/images/projekt-02.jpg" alt="Naziv projekta 02 – kategorija">
+              <img class="gallery-img" src="assets/images/yves rocher webshop_mobilna.webp" alt="Naziv projekta 02 – kategorija">
             </div>
 
           </article>
