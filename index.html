@@ -671,7 +671,6 @@
     .work-item {
       position: sticky;
       top: 10vh;
-      height: 76vh;
       max-width: 1180px;
       /* Namjerno uvučeno lijevo od container-teksta (ne slučajno, ne zigzag) —
          ista logika centriranja kao .container, samo s manjim/vecim offsetom
@@ -680,7 +679,7 @@
       margin-right: max(16px, calc((100% - var(--container)) / 2 + var(--gutter) + 56px));
       display: grid;
       grid-template-columns: 30% 70%;
-      align-items: center;
+      align-items: stretch;
       background: var(--white);
       border-radius: 14px;
       box-shadow: 0 30px 70px rgba(0,0,0,0.10);
@@ -757,10 +756,10 @@
       color: var(--mid-gray);
     }
 
-    /* Desna strana — jedna velika slika, puni cijelu visinu ekrana (70% širine) */
+    /* Desna strana — jedna velika slika, fiksni omjer 3:2 (70% širine) */
     .work-gallery {
-      height: 100%;
       width: 100%;
+      aspect-ratio: 3 / 2;
     }
 
     .gallery-img {
@@ -1118,7 +1117,7 @@
         padding: 48px 0;
       }
 
-      .work-gallery { aspect-ratio: 4/3; }
+      .work-gallery { aspect-ratio: 3/2; }
 
       .more-grid { grid-template-columns: repeat(2, 1fr); }
 
@@ -1430,7 +1429,7 @@
             </div>
 
             <div class="work-gallery">
-              <img class="gallery-img" src="assets/images/Jumbo plakat.webp" alt="Naziv projekta 03 – kategorija">
+              <img class="gallery-img" src="assets/images/Yves Rocher Jumbo plakat.webp" alt="Naziv projekta 03 – kategorija">
             </div>
 
           </article>
@@ -1472,7 +1471,7 @@
             </div>
 
             <div class="work-gallery">
-              <img class="gallery-img" src="assets/images/haus dalmatia laptop and phone_test 01.webp" alt="Naziv projekta 05 – kategorija">
+              <img class="gallery-img" src="assets/images/haus dalmatia laptop and phone.webp" alt="Naziv projekta 05 – kategorija">
             </div>
 
           </article>
