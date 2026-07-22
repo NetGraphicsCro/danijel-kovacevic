@@ -235,9 +235,7 @@
       position: fixed;
       inset: 0;
       z-index: 200;
-      background: rgba(10, 10, 10, 0.97);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: var(--neo-blue);
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
@@ -263,7 +261,7 @@
       background: transparent;
       border: none;
       cursor: pointer;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.8);
       transition: color 0.2s;
       margin-bottom: 16px;     /* razmak između X i prvog nav linka */
       padding: 0;
@@ -291,23 +289,24 @@
     }
 
     .mobile-menu-nav li {
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.18);
       overflow: hidden;
     }
 
     .mobile-menu-nav li:first-child {
-      border-top: 1px solid rgba(255,255,255,0.07);
+      border-top: 1px solid rgba(255,255,255,0.18);
     }
 
     .mobile-menu-nav a {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 14px;
       padding: 22px 0;
       font-family: var(--font-display);
       font-size: clamp(1.6rem, 7vw, 2.2rem);
       font-weight: 800;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.92);
       letter-spacing: -0.01em;
       text-align: left;
       /* Svaka stavka se pojavljuje s blagim kašnjenjem */
@@ -326,35 +325,33 @@
     .mobile-menu.is-open .mobile-menu-nav li:nth-child(2) a { transition-delay: 0.14s; }
     .mobile-menu.is-open .mobile-menu-nav li:nth-child(3) a { transition-delay: 0.20s; }
 
-    /* Fix 3: Plavi kružić — uvijek vidljiv (ne samo na hover) */
-    .mobile-menu-nav a::before {
-      content: '';
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      border: 1.5px solid var(--neo-blue);
+    /* Strelica — dijagonalna u mirovanju, "izravna se" na hover */
+    .mobile-nav-arrow {
+      width: 20px;
+      height: 20px;
       flex-shrink: 0;
-      /* uvijek vidljiv */
-      opacity: 1;
-      transform: scale(1);
-      transition: background 0.2s, border-color 0.2s;
+      stroke: rgba(255,255,255,0.6);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transform: rotate(-45deg);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.2s;
     }
 
     .mobile-menu-nav a:hover {
       color: var(--white);
     }
 
-    .mobile-menu-nav a:hover::before {
-      background: var(--neo-blue);
+    .mobile-menu-nav a:hover .mobile-nav-arrow {
+      transform: rotate(0deg);
+      stroke: var(--white);
     }
 
-    /* Fix 4: Socijalni linkovi — ista lijeva linija kao nav stavke */
+    /* Fix 4: Jedan veliki lime CTA gumb umjesto sitnih socijalnih linkova */
     .mobile-menu-footer {
       margin-top: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: flex-start;
+      width: 100%;
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.35s ease 0.3s, transform 0.35s ease 0.3s;
@@ -365,18 +362,25 @@
       transform: translateY(0);
     }
 
-    .mobile-menu-footer a {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-      text-align: left;
+    .mobile-menu-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 20px 0;
+      background: var(--lime);
+      color: var(--black);
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      transition: transform 0.2s, background 0.2s;
     }
 
-    .mobile-menu-footer a:hover {
-      color: rgba(255,255,255,0.7);
+    .mobile-menu-cta:hover {
+      background: var(--white);
+      transform: translateY(-2px);
     }
 
     /* ─────────────────────────────────────────────
@@ -435,8 +439,8 @@
     .hero-sub {
       margin-top: 20px;
       font-size: clamp(1rem, 1.5vw, 1.2rem);
-      color: rgba(255,255,255,0.55);
-      font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      font-weight: 400;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
@@ -813,9 +817,14 @@
 
     .more-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 24px;
     }
+
+    /* Različite širine za "editorial" raspored — 3, 2 ili 1 okvir po redu */
+    .more-card--span2 { grid-column: span 2; }
+    .more-card--span3 { grid-column: span 3; }
+    .more-card--span6 { grid-column: span 6; }
 
     .more-card {
       display: block;
@@ -834,6 +843,13 @@
       margin-bottom: 14px;
       transition: border-color 0.2s, transform 0.2s;
     }
+
+    /* Uža kartica (3 po redu) ostaje portret — većina radova stoji okomito */
+    .more-card--span2 .more-card-img { aspect-ratio: 4/5; }
+    /* Srednja kartica (2 po redu) — kvadratniji format */
+    .more-card--span3 .more-card-img { aspect-ratio: 1/1; }
+    /* Puna širina (1 po redu) — panoramski format, za billboarde/jumbo plakate i sl. */
+    .more-card--span6 .more-card-img { aspect-ratio: 21/9; }
 
     .more-card:hover .more-card-img {
       border-color: var(--neo-blue);
@@ -985,7 +1001,7 @@
 
     .footer-tagline {
       font-size: 0.8rem;
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.55);
       letter-spacing: 0.04em;
     }
 
@@ -1049,7 +1065,7 @@
 
     .footer-bottom p {
       font-size: 0.75rem;
-      color: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.45);
       letter-spacing: 0.04em;
     }
 
@@ -1120,6 +1136,7 @@
       .work-gallery { aspect-ratio: 3/2; }
 
       .more-grid { grid-template-columns: repeat(2, 1fr); }
+      .more-card--span2, .more-card--span3, .more-card--span6 { grid-column: span 1; }
 
       .footer-inner {
         flex-direction: column;
@@ -1170,6 +1187,7 @@
 
       /* Fix 3: more-grid — jedan stupac */
       .more-grid { grid-template-columns: 1fr; }
+      .more-card--span2, .more-card--span3, .more-card--span6 { grid-column: span 1; }
 
       .footer-inner { gap: 24px; }
       .footer-brand { flex-direction: column; align-items: flex-start; gap: 4px; }
@@ -1255,15 +1273,28 @@
 
     <nav>
       <ul class="mobile-menu-nav">
-        <li><a href="#o-meni" class="mobile-nav-link">O meni</a></li>
-        <li><a href="#radovi" class="mobile-nav-link">Radovi</a></li>
-        <li><a href="#kontakt" class="mobile-nav-link">Kontakt</a></li>
+        <li>
+          <a href="#o-meni" class="mobile-nav-link">
+            O meni
+            <svg class="mobile-nav-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#radovi" class="mobile-nav-link">
+            Radovi
+            <svg class="mobile-nav-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#kontakt" class="mobile-nav-link">
+            Kontakt
+            <svg class="mobile-nav-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </li>
       </ul>
     </nav>
     <div class="mobile-menu-footer">
-      <a href="mailto:kovacevicdanijel@yahoo.com">Email</a>
-      <a href="https://linkedin.com/in/tvoj-profil" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://behance.net/tvoj-profil" target="_blank" rel="noopener">Behance</a>
+      <a href="mailto:kovacevicdanijel@yahoo.com" class="mobile-menu-cta">Kontakt</a>
     </div>
   </div>
 
@@ -1495,91 +1526,91 @@
         <!-- Slike su spremne za zamjenu — samo prebaci pravu datoteku pod isto ime u assets/images/ -->
         <div class="more-grid reveal">
 
-          <a href="#" class="more-card">
-            <img class="more-card-img" src="assets/images/La Redoute katalog dizajn.webp" alt="Naziv projekta – Oglas — časopis" loading="lazy">
+          <a href="#" class="more-card more-card--span2">
+            <img class="more-card-img" src="assets/images/La Redoute katalog design2.webp" alt="Naziv projekta – Oglas — časopis" loading="lazy">
             <p class="more-card-title">La Redoute katalog - priprema za tisak</p>
             <p class="more-card-cat">Print Design</p>
           </a>
 
-          <a href="#" class="more-card">
+          <a href="#" class="more-card more-card--span2">
             <img class="more-card-img" src="assets/images/projekt-07.jpg" alt="Naziv projekta – Letak" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Print Design</p>
           </a>
 
-          <a href="#" class="more-card">
+          <a href="#" class="more-card more-card--span2">
             <img class="more-card-img" src="assets/images/projekt-08.jpg" alt="Naziv projekta – Brošura" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Editorial Design</p>
           </a>
 
-          <a href="#" class="more-card">
+          <a href="#" class="more-card more-card--span3">
             <img class="more-card-img" src="assets/images/projekt-09.jpg" alt="Naziv projekta – Jumbo plakat" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Outdoor Advertising</p>
           </a>
 
-          <a href="#" class="more-card">
+          <a href="#" class="more-card more-card--span3">
             <img class="more-card-img" src="assets/images/projekt-10.jpg" alt="Naziv projekta – Web dizajn" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Web Design</p>
           </a>
 
-          <a href="#" class="more-card">
+          <a href="#" class="more-card more-card--span2">
             <img class="more-card-img" src="assets/images/projekt-11.jpg" alt="Naziv projekta – Vizualni identitet" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Visual Identity</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span2">
             <img class="more-card-img" src="assets/images/projekt-12.jpg" alt="Naziv projekta – Oglas — novine" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Print Design</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span2">
             <img class="more-card-img" src="assets/images/projekt-13.jpg" alt="Naziv projekta – Katalog proizvoda" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Editorial Design</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span6 more-card--extra">
             <img class="more-card-img" src="assets/images/projekt-14.jpg" alt="Naziv projekta – Naljepnica za pakiranje" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Packaging Design</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span2 more-card--extra">
             <img class="more-card-img" src="assets/images/projekt-15.jpg" alt="Naziv projekta – Poslovna kartica" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Visual Identity</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span2 more-card--extra">
             <img class="more-card-img" src="assets/images/projekt-16.jpg" alt="Naziv projekta – Objave za društvene mreže" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Social Media Design</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span2 more-card--extra">
             <img class="more-card-img" src="assets/images/projekt-17.jpg" alt="Naziv projekta – Billboard" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Outdoor Advertising</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span3 more-card--extra">
             <img class="more-card-img" src="assets/images/projekt-18.jpg" alt="Naziv projekta – Pozivnica / event" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Print Design</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span3 more-card--extra">
             <img class="more-card-img" src="assets/images/projekt-19.jpg" alt="Naziv projekta – Naslovnica časopisa" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Editorial Design</p>
           </a>
 
-          <a href="#" class="more-card more-card--extra">
+          <a href="#" class="more-card more-card--span6 more-card--extra">
             <img class="more-card-img" src="assets/images/projekt-20.jpg" alt="Naziv projekta – Video / motion" loading="lazy">
             <p class="more-card-title">Naziv projekta</p>
             <p class="more-card-cat">Video Editing</p>
@@ -1589,7 +1620,7 @@
 
         <div class="more-grid-toggle-wrap">
           <button type="button" class="more-grid-toggle" id="moreGridToggle" aria-expanded="false">
-            <span class="toggle-label">Prikaži još radova (9)</span>
+            <span class="toggle-label">Prikaži još radova (7)</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                  stroke-linecap="round" stroke-linejoin="round">
               <path d="M6 9l6 6 6-6"/>
@@ -1793,7 +1824,7 @@
         moreGridToggle.setAttribute('aria-expanded', String(isExpanded));
         toggleLabel.textContent = isExpanded
           ? 'Prikaži manje'
-          : 'Prikaži još radova (9)';
+          : 'Prikaži još radova (7)';
       });
     }
 
