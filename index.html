@@ -387,6 +387,30 @@
       transform: translateY(-2px);
     }
 
+    .mobile-menu-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mobile-menu-social a {
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+
+    .mobile-menu-social a:hover {
+      color: var(--white);
+    }
+
+    .mobile-menu-social span {
+      color: rgba(255,255,255,0.3);
+    }
+
     /* ─────────────────────────────────────────────
        HERO
     ───────────────────────────────────────────── */
@@ -553,13 +577,25 @@
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      grid-template-areas:
+        "heading  ."
+        "para-l   para-r";
+      column-gap: 80px;
+      row-gap: 32px;
       align-items: start;
+    }
+
+    .about-heading-wrap {
+      grid-area: heading;
+    }
+
+    .about-col-left {
+      grid-area: para-l;
     }
 
     .about-heading {
       font-family: var(--font-display);
-      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-size: clamp(2.6rem, 4.2vw, 4.4rem);
       font-weight: 800;
       line-height: 1.08;
       letter-spacing: -0.03em;
@@ -579,7 +615,7 @@
     /* Desni stupac (drugi paragraf) treba lagani pomak dolje da ne
        "lijepi" izravno uz naslov s lijeve strane */
     .about-col-right {
-      padding-top: clamp(0px, 8vw, 96px);
+      grid-area: para-r;
     }
 
     /* ─────────────────────────────────────────────
@@ -1144,7 +1180,11 @@
     @media (max-width: 900px) {
       .about-grid {
         grid-template-columns: 1fr;
-        gap: 48px;
+        grid-template-areas:
+          "heading"
+          "para-l"
+          "para-r";
+        row-gap: 28px;
       }
 
       .about-col-right {
@@ -1280,7 +1320,7 @@
   <header class="site-header" id="site-header">
     <div class="container header-inner">
 
-      <a href="#" class="logo">Danijel<span>.</span>Kovačević</a>
+      <a href="#hero" class="logo">Danijel<span>.</span>Kovačević</a>
 
       <!-- Desktop navigacija -->
       <nav>
@@ -1335,7 +1375,12 @@
       </ul>
     </nav>
     <div class="mobile-menu-footer">
-      <a href="mailto:kovacevicdanijel@yahoo.com" class="mobile-menu-cta">Kontakt</a>
+      <a href="mailto:kovacevicdanijel@yahoo.com" class="mobile-menu-cta">Pošalji email</a>
+      <div class="mobile-menu-social">
+        <a href="https://linkedin.com/in/tvoj-profil" target="_blank" rel="noopener">LinkedIn</a>
+        <span>·</span>
+        <a href="https://instagram.com/tvoj-profil" target="_blank" rel="noopener">Instagram</a>
+      </div>
     </div>
   </div>
 
@@ -1379,12 +1424,14 @@
       <div class="container">
         <div class="about-grid">
 
-          <!-- Lijevo: naslov + prvi paragraf -->
-          <div class="reveal">
+          <!-- Naslov — vlastiti red, samo lijeva strana -->
+          <div class="reveal about-heading-wrap">
             <span class="eyebrow">O meni</span>
-
             <h2 class="about-heading">Dizajn<br>koji govori.</h2>
+          </div>
 
+          <!-- Paragraf lijevo -->
+          <div class="reveal about-col-left" style="transition-delay:0.05s">
             <div class="about-body">
               <p>
                 Iza mene je više od desetljeća rada u grafičkom i web dizajnu - i naučio sam da najbolji vizuali nastaju kada se kreativnost oslanja na jasnu svrhu. Bilo da gradim stranicu u WordPressu, pripremam materijale za tisak ili modeliram 3D ambalažu – svaki projekt prevodim u jasna, opipljiva rješenja.
@@ -1392,7 +1439,7 @@
             </div>
           </div>
 
-          <!-- Desno: drugi paragraf -->
+          <!-- Paragraf desno -->
           <div class="reveal about-col-right" style="transition-delay:0.1s">
             <div class="about-body">
               <p>
@@ -1730,7 +1777,7 @@
 
         <!-- Brand -->
         <div class="footer-brand">
-          <a href="#" class="logo">Danijel<span>.</span>Kovačević</a>
+          <a href="#hero" class="logo">Danijel<span>.</span>Kovačević</a>
           <p class="footer-tagline">Grafički &amp; web dizajner</p>
         </div>
 
