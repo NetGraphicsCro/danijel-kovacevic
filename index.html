@@ -329,6 +329,37 @@
     .mobile-menu.is-open .mobile-menu-nav li:nth-child(2) a { transition-delay: 0.14s; }
     .mobile-menu.is-open .mobile-menu-nav li:nth-child(3) a { transition-delay: 0.20s; }
 
+    /* Sekundarna lista (LinkedIn/Instagram) — isti sustav, manji format */
+    .mobile-menu-nav--secondary {
+      margin-top: 4px;
+    }
+
+    .mobile-menu-nav--secondary li {
+      border-bottom: 1px dashed rgba(255,255,255,0.3);
+    }
+
+    .mobile-menu-nav--secondary li:first-child {
+      border-top: none;
+    }
+
+    .mobile-menu-nav--secondary a {
+      padding: 14px 0;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .mobile-menu-nav--secondary .mobile-nav-arrow {
+      width: 15px;
+      height: 15px;
+    }
+
+    .mobile-menu.is-open .mobile-menu-nav--secondary li:nth-child(1) a { transition-delay: 0.26s; }
+    .mobile-menu.is-open .mobile-menu-nav--secondary li:nth-child(2) a { transition-delay: 0.32s; }
+
     /* Strelica — dijagonalna u mirovanju, "izravna se" na hover */
     .mobile-nav-arrow {
       width: 20px;
@@ -385,30 +416,6 @@
     .mobile-menu-cta:hover {
       background: var(--white);
       transform: translateY(-2px);
-    }
-
-    .mobile-menu-social {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 18px;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .mobile-menu-social a {
-      color: rgba(255,255,255,0.6);
-      transition: color 0.2s;
-    }
-
-    .mobile-menu-social a:hover {
-      color: var(--white);
-    }
-
-    .mobile-menu-social span {
-      color: rgba(255,255,255,0.3);
     }
 
     /* ─────────────────────────────────────────────
@@ -1373,14 +1380,23 @@
           </a>
         </li>
       </ul>
+      <ul class="mobile-menu-nav mobile-menu-nav--secondary">
+        <li>
+          <a href="https://linkedin.com/in/tvoj-profil" target="_blank" rel="noopener" class="mobile-nav-link">
+            LinkedIn
+            <svg class="mobile-nav-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://instagram.com/tvoj-profil" target="_blank" rel="noopener" class="mobile-nav-link">
+            Instagram
+            <svg class="mobile-nav-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </li>
+      </ul>
     </nav>
     <div class="mobile-menu-footer">
-      <a href="mailto:kovacevicdanijel@yahoo.com" class="mobile-menu-cta">Pošalji email</a>
-      <div class="mobile-menu-social">
-        <a href="https://linkedin.com/in/tvoj-profil" target="_blank" rel="noopener">LinkedIn</a>
-        <span>·</span>
-        <a href="https://instagram.com/tvoj-profil" target="_blank" rel="noopener">Instagram</a>
-      </div>
+      <a href="mailto:kovacevicdanijel@yahoo.com" class="mobile-menu-cta">Pošalji e-mail</a>
     </div>
   </div>
 
