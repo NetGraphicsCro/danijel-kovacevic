@@ -1274,6 +1274,49 @@
       color: var(--white);
     }
 
+    /* ── E-mail copy pill — button reset + tooltip ── */
+    .social-pill--copy {
+      position: relative;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.12);
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+
+    .email-tooltip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: var(--lime);
+      color: var(--black);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      padding: 6px 12px;
+      border-radius: 100px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    /* Mala strelica ispod tooltipa */
+    .email-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--lime);
+    }
+
+    .email-tooltip.is-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     .footer-bottom {
       margin-top: 48px;
       padding-top: 24px;
@@ -1541,7 +1584,7 @@
       </ul>
     </nav>
     <div class="mobile-menu-footer">
-      <a href="#kontakt" class="mobile-menu-cta">Pošalji poruku</a>
+      <a href="mailto:kovacevicdanijel@yahoo.com" class="mobile-menu-cta">Pošalji e-mail</a>
     </div>
   </div>
 
@@ -1948,7 +1991,7 @@
             </div>
 
             <div class="form-group">
-              <label for="contact-email">E-mail</label>
+              <label for="contact-email">Tvoj e-mail</label>
               <input type="email" id="contact-email" name="email" required autocomplete="email">
             </div>
 
@@ -2000,15 +2043,16 @@
         <!-- Socijalni linkovi -->
         <div class="footer-social">
 
-          <!-- E-mail — vodi na kontakt formu, ne mailto (izbjegava "odaberi aplikaciju" prozor) -->
-          <a href="#kontakt" class="social-pill">
+          <!-- E-mail — klik kopira adresu u clipboard, tooltip potvrđuje -->
+          <button type="button" class="social-pill social-pill--copy" id="emailCopyBtn" aria-label="Kopiraj e-mail adresu">
             <svg viewBox="0 0 24 24" stroke-width="1.5"
                  stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="4" width="20" height="16" rx="2"/>
               <path d="M2 7l10 7 10-7"/>
             </svg>
             E-mail
-          </a>
+            <span class="email-tooltip" id="emailTooltip" aria-hidden="true">E-mail kopiran!</span>
+          </button>
 
           <!-- LinkedIn -->
           <a href="https://www.linkedin.com/in/danijel-kovacevic-design/"
@@ -2188,6 +2232,37 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
     reveals.forEach(el => revealObs.observe(el));
+
+    /* ── E-mail copy to clipboard ── */
+    const emailCopyBtn = document.getElementById('emailCopyBtn');
+    const emailTooltip = document.getElementById('emailTooltip');
+    if (emailCopyBtn && emailTooltip) {
+      let tooltipTimer;
+      emailCopyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('kovacevicdanijel@yahoo.com').then(() => {
+          emailTooltip.classList.add('is-visible');
+          clearTimeout(tooltipTimer);
+          tooltipTimer = setTimeout(() => {
+            emailTooltip.classList.remove('is-visible');
+          }, 2200);
+        }).catch(() => {
+          /* Fallback za starije browsere */
+          const ta = document.createElement('textarea');
+          ta.value = 'kovacevicdanijel@yahoo.com';
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          emailTooltip.classList.add('is-visible');
+          clearTimeout(tooltipTimer);
+          tooltipTimer = setTimeout(() => {
+            emailTooltip.classList.remove('is-visible');
+          }, 2200);
+        });
+      });
+    }
 
     /* ── Smooth scroll za nav linkove ── */
     document.querySelectorAll('a[href^="#"]').forEach(link => {
