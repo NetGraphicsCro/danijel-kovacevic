@@ -794,11 +794,12 @@
       align-items: center;
       gap: 6px;
       font-size: 0.66rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--lime);
-      background: rgba(168, 230, 61, 0.12);
+      background: transparent;
+      border: 1.5px solid var(--lime);
       padding: 4px 10px;
       border-radius: 100px;
       margin-bottom: 12px;
@@ -1191,7 +1192,7 @@
       min-height: 1.2em;
     }
 
-    .form-status.success { color: #1a8f4c; }
+    .form-status.success { color: var(--dark-gray); }
     .form-status.error { color: #d64545; }
 
     /* ─────────────────────────────────────────────
@@ -1485,6 +1486,12 @@
 
       .more-card-title { font-size: 0.82rem; }
       .more-card-cat { font-size: 0.7rem; }
+
+      /* Razmak između sticky headera i vrha sekcije pri scroll navigaciji —
+         samo na mobitelu gdje je header viši (hamburger) i tekst se "lijepi" uz njega */
+      #o-meni, #radovi, #kontakt {
+        scroll-margin-top: 80px;
+      }
     }
 
     /* ─────────────────────────────────────────────
