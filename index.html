@@ -795,6 +795,7 @@
       gap: 6px;
       font-size: 0.66rem;
       font-weight: 800;
+      line-height: 1;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--lime);
@@ -811,6 +812,14 @@
       width: 5px; height: 5px;
       border-radius: 50%;
       background: var(--lime);
+    }
+
+    /* Optička korekcija: verzal (velika slova) nema repova ispod linije,
+       pa font-metrika ostavlja "nevidljiv" prostor ispod slova koji
+       align-items:center uzima u obzir — tekst zato izgleda pomaknut
+       gore u odnosu na točkicu koja je stvarni geometrijski centar. */
+    .featured-tag-label {
+      transform: translateY(1px);
     }
 
     .work-category {
@@ -1713,7 +1722,7 @@
           <article class="work-item">
 
             <div class="work-meta">
-              <span class="featured-tag">Izdvojeno</span>
+              <span class="featured-tag"><span class="featured-tag-label">Izdvojeno</span></span>
               <p class="work-category">Web dizajn</p>
               <h3 class="work-title">Yves Rocher Hrvatska</h3>
               <p class="work-desc">
@@ -1738,7 +1747,7 @@
           <article class="work-item">
 
             <div class="work-meta">
-              <span class="featured-tag">Izdvojeno</span>
+              <span class="featured-tag"><span class="featured-tag-label">Izdvojeno</span></span>
               <p class="work-category">Web dizajn</p>
               <h3 class="work-title">Yves Rocher Hrvatska</h3>
               <p class="work-desc">
@@ -1762,7 +1771,7 @@
           <article class="work-item">
 
             <div class="work-meta">
-              <span class="featured-tag">Izdvojeno</span>
+              <span class="featured-tag"><span class="featured-tag-label">Izdvojeno</span></span>
               <p class="work-category">Vanjsko oglašavanje</p>
               <h3 class="work-title">Yves Rocher Hrvatska</h3>
               <p class="work-desc">
@@ -1782,7 +1791,7 @@
           <article class="work-item">
 
             <div class="work-meta">
-              <span class="featured-tag">Izdvojeno</span>
+              <span class="featured-tag"><span class="featured-tag-label">Izdvojeno</span></span>
               <p class="work-category">Webshop Administracija</p>
               <h3 class="work-title">5 stars</h3>
               <p class="work-desc">
@@ -1802,7 +1811,7 @@
           <article class="work-item">
 
             <div class="work-meta">
-              <span class="featured-tag">Izdvojeno</span>
+              <span class="featured-tag"><span class="featured-tag-label">Izdvojeno</span></span>
               <p class="work-category">Web Dizajn</p>
               <h3 class="work-title">Haus Dalmatia</h3>
               <p class="work-desc">
@@ -1846,43 +1855,43 @@
           </a>
 
           <a href="#" class="more-card more-card--span2" target="_blank" rel="noopener">
-            <img class="more-card-img" src="assets/images/Yves Rocher Newsletteri 2.webp" alt="Naziv projekta – Letak" loading="lazy">
+            <img class="more-card-img" src="assets/images/yves-rocher-newsletteri.webp" alt="Dizajn newslettera za Yves Rocher Hrvatska" loading="lazy">
             <p class="more-card-title">Yves Rocher - newsletteri</p>
             <p class="more-card-cat">Email marketing</p>
           </a>
 
           <a href="#" class="more-card more-card--span2" target="_blank" rel="noopener">
-            <img class="more-card-img" src="assets/images/5 Stars_web design_phone 2.webp" alt="Naziv projekta – Brošura" loading="lazy">
+            <img class="more-card-img" src="assets/images/5-stars-web-design-phone.webp" alt="Dizajn mobilne webshop stranice five stars" loading="lazy">
             <p class="more-card-title">5 stars - mobilna aplikacija i responzivni dizajn</p>
             <p class="more-card-cat">Web dizajn</p>
           </a>
 
           <a href="#" class="more-card more-card--span3" target="_blank" rel="noopener">
-            <img class="more-card-img" src="assets/images/Yves Rocher duplerica_casopis.webp" alt="Naziv projekta – Jumbo plakat" loading="lazy">
+            <img class="more-card-img" src="assets/images/yves-rocher-duplerica-casopis.webp" alt="Dizajn oglasa Yves Rocher Hrvatska za časopis" loading="lazy">
             <p class="more-card-title">Yves Rocher - oglas za časopis</p>
             <p class="more-card-cat">Print dizajn</p>
           </a>
 
           <a href="#" class="more-card more-card--span3" target="_blank" rel="noopener">
-            <img class="more-card-img" src="assets/images/Yves Rocher_Bozicni letak za trgovine.webp" alt="Naziv projekta – Web dizajn" loading="lazy">
+            <img class="more-card-img" src="assets/images/yves-rocher-bozicni-letak-za-trgovine.webp" alt="Dizajn letka za Yves Rocher Hrvatska trgovine" loading="lazy">
             <p class="more-card-title">Yves Rocher - letak za trgovine</p>
             <p class="more-card-cat">Print dizajn</p>
           </a>
 
           <a href="#" class="more-card more-card--span2" target="_blank" rel="noopener">
-            <img class="more-card-img" src="assets/images/Yves Rocher plakat za trgovine.webp" alt="Naziv projekta – Vizualni identitet" loading="lazy">
+            <img class="more-card-img" src="assets/images/yves-rocher-plakat-za-trgovine.webp" alt="Dizajn plakata za Yves Rocher Hrvatska trgovine" loading="lazy">
             <p class="more-card-title">Yves Rocher - plakat za trgovine</p>
             <p class="more-card-cat">Print dizajn</p>
           </a>
 
           <a href="#" class="more-card more-card--span2" target="_blank" rel="noopener">
-            <img class="more-card-img" src="assets/images/Hotel Kralj Tomislav plakat.webp" alt="Naziv projekta – Oglas — novine" loading="lazy">
+            <img class="more-card-img" src="assets/images/Hotel-Kralj-Tomislav-plakat.webp" alt="Dizajn plakata za Hotel Kralj Tomislav Nova Gradiška" loading="lazy">
             <p class="more-card-title">Hotel Kralj Tomislav - plakat za Valentinovo</p>
             <p class="more-card-cat">Print dizajn</p>
           </a>
 
           <a href="#" class="more-card more-card--span2" target="_blank" rel="noopener">
-            <img class="more-card-img" src="assets/images/Yves Rocher_Instagram post.webp" alt="Naziv projekta – Katalog proizvoda" loading="lazy">
+            <img class="more-card-img" src="assets/images/yves-rocher-instagram-post.webp" alt="Dizajn Instagram vizuala za Yves Rocher Hrvatska" loading="lazy">
             <p class="more-card-title">Yves Rocher - dizajn vizuala za Instagram </p>
             <p class="more-card-cat">Vizuali za društvene mreže</p>
           </a>
