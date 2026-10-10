@@ -26,6 +26,57 @@
   <meta name="twitter:title" content="Danijel Kovačević | Grafički i Web Dizajner" />
   <meta name="twitter:description" content="Danijel Kovačević - grafički i web dizajner iz Nove Gradiške. Specijaliziran za dizajn ambalaže, web stranice i video editiranje. Pogledajte moje radove." />
   <meta name="twitter:image" content="https://danijelkovacevic.com/assets/images/danijel-kovacevic-sc.jpg" />
+
+  <!-- Canonical + jezik/lokacija za društvene mreže -->
+  <link rel="canonical" href="https://danijelkovacevic.com/" />
+  <meta property="og:locale" content="hr_HR" />
+  <meta property="og:site_name" content="Danijel Kovačević" />
+
+  <!-- Strukturirani podaci (schema.org) — govore Googleu tko si i gdje djeluješ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://danijelkovacevic.com/#osoba",
+        "name": "Danijel Kovačević",
+        "url": "https://danijelkovacevic.com/",
+        "image": "https://danijelkovacevic.com/assets/images/danijel-kovacevic-sc.jpg",
+        "jobTitle": "Grafički i web dizajner",
+        "description": "Grafički i web dizajner iz Nove Gradiške. Vizualni identitet, dizajn ambalaže, izrada web stranica i video editiranje.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nova Gradiška",
+          "addressRegion": "Brodsko-posavska županija",
+          "addressCountry": "HR"
+        },
+        "knowsAbout": ["Grafički dizajn", "Web dizajn", "Vizualni identitet", "Dizajn ambalaže", "Video editiranje"],
+        "sameAs": [
+          "https://www.linkedin.com/in/danijel-kovacevic-design/",
+          "https://www.instagram.com/uvod_u_danijel_k/"
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://danijelkovacevic.com/#usluge",
+        "name": "Danijel Kovačević - grafički i web dizajn",
+        "url": "https://danijelkovacevic.com/",
+        "image": "https://danijelkovacevic.com/assets/images/danijel-kovacevic-sc.jpg",
+        "description": "Grafički i web dizajn iz Nove Gradiške: vizualni identitet, dizajn ambalaže, web stranice i video editiranje.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nova Gradiška",
+          "addressRegion": "Brodsko-posavska županija",
+          "addressCountry": "HR"
+        },
+        "areaServed": ["Nova Gradiška", "Brodsko-posavska županija", "Slavonija", "Hrvatska"],
+        "provider": { "@id": "https://danijelkovacevic.com/#osoba" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -53,6 +104,7 @@
       --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       --font-body:    'Inter', sans-serif;
 
+      --pill-h:      38px;        /* visina footer bedževa (E-mail, LinkedIn, Instagram) */
       --section-pad: clamp(72px, 10vw, 120px);
       --container:   1200px;
       --gutter:      clamp(24px, 5vw, 80px);
@@ -480,6 +532,8 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
+
+    .hero-city { white-space: nowrap; }
 
     .hero-tagline {
       margin-top: 28px;
@@ -1286,19 +1340,29 @@
       padding: 56px 0 40px;
     }
 
-    /* Sve u jednom flush redu, vertikalno centrirano na istoj liniji */
+    /* Poravnanje na vrh: ime, meni i bedževi dijele istu središnju liniju prvog reda,
+       a grad ispod imena slobodno visi dolje */
     .footer-inner {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 32px;
     }
 
     .footer-brand {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto auto;
       align-items: baseline;
-      gap: 12px;
+      column-gap: 12px;
+      row-gap: 6px;
+      padding-top: calc((var(--pill-h) - 1.6rem) / 2); /* sredina loga = sredina bedževa */
+    }
+
+    /* Grad ispod loga i taglinea; poravnat s logom (koji ima margin-left: 12px) */
+    .footer-location {
+      grid-column: 1 / -1;
+      margin-left: 12px;
     }
 
     .footer-brand .logo { font-size: 1rem; }
@@ -1313,6 +1377,7 @@
       display: flex;
       align-items: center;
       gap: 28px;
+      min-height: var(--pill-h);
     }
 
     .footer-links a {
@@ -1336,12 +1401,14 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
-      border: 1px solid rgba(255,255,255,0.12);
+      height: var(--pill-h);
+      padding: 0 16px;
+      line-height: 1;
+      border: 1px solid rgba(255,255,255,0.30);
       border-radius: 100px;
       font-size: 0.78rem;
       font-weight: 500;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.7);
       letter-spacing: 0.04em;
       transition: border-color 0.2s, color 0.2s;
     }
@@ -1362,7 +1429,7 @@
     .social-pill--copy {
       position: relative;
       background: transparent;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.30);
       cursor: pointer;
       font-family: var(--font-body);
     }
@@ -1504,6 +1571,9 @@
         gap: 28px;
       }
 
+      .footer-brand { padding-top: 0; }
+      .footer-links { min-height: 0; }
+
       .footer-social { justify-content: flex-start; flex-wrap: wrap; }
     }
 
@@ -1550,7 +1620,8 @@
       .more-card--span2, .more-card--span3, .more-card--span6 { grid-column: span 1; }
 
       .footer-inner { gap: 24px; }
-      .footer-brand { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+      .footer-location { margin-left: 0; }
 
       /* Fix 4a: footer logo align left */
       .footer-brand .logo { margin-left: 0; }
@@ -1689,7 +1760,7 @@
     <canvas id="lensCanvas"></canvas>
 
     <div class="container hero-content">
-      <p class="hero-sub">Grafički &amp; Web dizajner</p>
+      <p class="hero-sub">Grafički &amp; Web dizajner <span class="hero-city">· Nova Gradiška</span></p>
       <h1 class="hero-placeholder-text">
         Ideje koje<br><span class="accent">postaju stvarnost</span>
       </h1>
@@ -2170,6 +2241,7 @@
         <div class="footer-brand">
           <a href="#hero" class="logo">Danijel<span>.</span>Kovačević</a>
           <p class="footer-tagline">Grafički &amp; web dizajner</p>
+          <p class="footer-tagline footer-location">Nova Gradiška, Hrvatska</p>
         </div>
 
         <!-- Nav linkovi na sredini -->
