@@ -842,6 +842,87 @@
     }
 
     /* ─────────────────────────────────────────────
+       SKY BANNER — tanka video traka s folderom "Portfolio"
+       (između "O meni" i "Radovi")
+    ───────────────────────────────────────────── */
+    .sky-banner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      overflow: hidden;
+      background: #5b9be0; /* boja neba dok se poster/video ne učita */
+    }
+
+    .sky-banner video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Traka zamjenjuje tanku sivu liniju iznad "Radova" */
+    .sky-banner + #radovi { border-top: 0; }
+
+    .sky-folder {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 98px;
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 10px;
+    }
+
+    .sky-folder svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 5px 7px rgba(8, 28, 90, 0.35));
+    }
+
+    /* Natpis je pravi HTML tekst: oštar na svakom ekranu i čitljiv čitačima ekrana.
+       15px bold ≈ 11 pt; bijelo na plavoj folder plohi ≈ 5:1 kontrasta (WCAG AA) */
+    .sky-folder-label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 58%;
+      transform: translateY(-50%);
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 1px rgba(10, 30, 100, 0.3);
+      pointer-events: none;
+    }
+
+    .sky-folder:focus-visible {
+      outline: 3px solid var(--black);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 4px var(--white);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .sky-folder {
+        transition: transform 0.25s ease;
+      }
+      .sky-folder svg {
+        transition: filter 0.25s ease;
+      }
+    }
+
+    @media (hover: hover) {
+      .sky-folder:hover { transform: translateY(-4px); }
+      .sky-folder:hover svg { filter: drop-shadow(0 10px 12px rgba(8, 28, 90, 0.4)); }
+    }
+
+    /* ─────────────────────────────────────────────
        RADOVI — zigzag: slike desno 70%, tekst lijevo 30%
     ───────────────────────────────────────────── */
     #radovi {
@@ -1897,6 +1978,40 @@
 
 
     <!-- ─────────────────────────────────────────
+         SKY BANNER — video traka s folderom "Portfolio"
+         Datoteke: assets/images/banner.webm, assets/images/banner.mp4, assets/images/banner-poster.jpg
+    ───────────────────────────────────────── -->
+    <div class="sky-banner">
+      <video id="skyVideo" muted loop playsinline preload="metadata"
+             poster="assets/images/banner-poster.jpg" width="1920" height="200"
+             aria-hidden="true" tabindex="-1" disablepictureinpicture disableremoteplayback>
+        <source src="assets/images/banner.webm" type="video/webm" />
+        <source src="assets/images/banner.mp4" type="video/mp4" />
+      </video>
+
+      <a class="sky-folder" href="#radovi">
+        <svg viewBox="-4 -4 128 102" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="skyFolderFront" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3a6bf4" />
+              <stop offset="1" stop-color="#2c58dc" />
+            </linearGradient>
+          </defs>
+          <!-- bijeli rub: "naljepnica" na nebu -->
+          <path d="M10 0H40C45 0 47 2 50 6L53 10H110A10 10 0 0 1 120 20V84A10 10 0 0 1 110 94H10A10 10 0 0 1 0 84V10A10 10 0 0 1 10 0Z"
+                fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" />
+          <!-- stražnja ploha s jezičcem -->
+          <path d="M10 0H40C45 0 47 2 50 6L53 10H110A10 10 0 0 1 120 20V84A10 10 0 0 1 110 94H10A10 10 0 0 1 0 84V10A10 10 0 0 1 10 0Z"
+                fill="#7da2fb" />
+          <!-- prednja ploha -->
+          <rect x="0" y="16" width="120" height="78" rx="10" fill="url(#skyFolderFront)" />
+          <path d="M10 16.7H110" stroke="#fff" stroke-opacity="0.28" stroke-width="1.2" stroke-linecap="round" />
+        </svg>
+        <span class="sky-folder-label">Portfolio</span>
+      </a>
+    </div>
+
+    <!-- ─────────────────────────────────────────
          RADOVI
     ───────────────────────────────────────── -->
     <section id="radovi">
@@ -2813,6 +2928,40 @@
           btn.setAttribute('aria-expanded', String(!isOpen));
         });
       });
+    })();
+  </script>
+
+  <script>
+    /* Sky banner — video se pušta samo dok je vidljiv i ako korisnik
+       nije isključio animacije u sustavu (inače ostaje statični poster) */
+    (() => {
+      const video = document.getElementById('skyVideo');
+      if (!video) return;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let visible = false;
+
+      function sync() {
+        if (visible && !reduce.matches) {
+          const p = video.play();
+          if (p && p.catch) p.catch(() => {});
+        } else {
+          video.pause();
+        }
+      }
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries) => {
+          visible = entries[0].isIntersecting;
+          sync();
+        }, { rootMargin: '100px 0px' }).observe(video);
+      } else {
+        visible = true;
+        sync();
+      }
+
+      if (reduce.addEventListener) reduce.addEventListener('change', sync);
+      else if (reduce.addListener) reduce.addListener(sync);
     })();
   </script>
 
